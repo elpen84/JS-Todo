@@ -21,28 +21,29 @@ addForm.addEventListener("submit", e => {
     generateTemplate(todo);
     addForm.reset();
   }
+});
 
-  //delete todos
-  list.addEventListener("click", e => {
-    if (e.target.classList.contains("delete")) {
-      e.target.parentElemnt.remove();
-    }
-  });
+//delete todos
+list.addEventListener("click", e => {
+  if (e.target.classList.contains("delete")) {
+    e.target.parentElement.remove();
+  }
+});
 
-  //keyup Event//
+//filter//
+const filterTodos = term => {
+  Array.from(list.children)
+    .filter(todo => !todo.textContent.includes(term))
+    .forEach(todo => todo.classList.add("filtered"));
 
-  search.addEventListener("keyup", () => {
-    const term = search.value.trim();
-  });
+  Array.from(list.children)
+    .filter(todo => todo.textContent.includes(term))
+    .forEach(todo => todo.classList.remove("filtered"));
+};
 
-  //
-  const filterTodos = term => {
-    Array.from(list.childern)
-      .filter(todo => !todo.textContent.includes(term))
-      .forEach(todo => todo.classList.add("filtered"));
+//keyup Event//
 
-    Array.from(list.childern)
-      .filter(todo => todo.textContent.includes(term))
-      .forEach(todo => todo.classList.remove("filtered"));
-  };
+search.addEventListener("keyup", () => {
+  const term = search.value.trim();
+  filterTodos(term);
 });
